@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@iconify/svelte": "^3.1.4",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
     "sass": "^1.63.6",
@@ -16,6 +17,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@fontsource/ubuntu": "^5.0.8",
     "node-fetch": "^3.3.2"
   }
 }
