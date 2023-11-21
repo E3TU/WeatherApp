@@ -136,21 +136,23 @@
   }
   .bottom-section {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     width: 100%;
     height: 100%;
     .grid-container {
       display: grid;
+      margin-top: 2rem;
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 5rem);
-      gap: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
-      height: 100%;
+      grid-template-rows: repeat(2, 1fr);
+      justify-content: center;
+      gap: 20px;
+      height: 100% - 20%;
+      width: 100% - 10%;
     }
     .grid-item {
       background-color: $dark-background-color;
       text-align: center;
+      border-radius: 6px;
     }
   }
 </style>
