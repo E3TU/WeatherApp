@@ -9,7 +9,7 @@
       <div class="top-section">
         <form>
           <input type="text" placeholder="Search for a city..." />
-          <button id="searchbtn"><Icon icon="carbon:search"/></button>
+          <button id="searchbtn"><Icon icon="carbon:search" /></button>
         </form>
       </div>
       <div class="mid-section">
@@ -88,16 +88,8 @@
     width: 45rem;
     height: 50rem;
     border-radius: 12px;
-    background: rgba(
-      255,
-      255,
-      255,
-      0.2
-    ); /* Adjust the alpha value to control the frosted effect */
-    backdrop-filter: blur(
-      50px
-    ); /* Adjust the blur value to control the frosted effect */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow for depth */
+    background: #101010;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   }
   .top-section {
     width: 100%;
@@ -178,7 +170,7 @@
       background-color: $dark-background-color;
       // text-align: center;
       border-radius: 6px;
-      .item-data{
+      .item-data {
         display: flex;
         flex-direction: column;
         gap: 0.25rem;
