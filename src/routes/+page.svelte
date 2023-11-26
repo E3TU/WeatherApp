@@ -9,9 +9,7 @@
       <div class="top-section">
         <form>
           <input type="text" placeholder="Search for a city..." />
-          <button id="searchbtn"
-            ><Icon icon="heroicons:magnifying-glass" /></button
-          >
+          <button id="searchbtn"><Icon icon="carbon:search"/></button>
         </form>
       </div>
       <div class="mid-section">
@@ -29,10 +27,34 @@
       </div>
       <div class="bottom-section">
         <div class="grid-container">
-          <div class="grid-item" />
-          <div class="grid-item" />
-          <div class="grid-item" />
-          <div class="grid-item" />
+          <div class="grid-item">
+            <Icon icon="carbon:temperature-celsius" width="30" height="30" />
+            <div class="item-data">
+              <h4>Real Feel</h4>
+              <h4>15°</h4>
+            </div>
+          </div>
+          <div class="grid-item">
+            <Icon icon="carbon:humidity" width="30" height="30" />
+            <div class="item-data">
+              <h4>humidity</h4>
+              <h4>75%</h4>
+            </div>
+          </div>
+          <div class="grid-item">
+            <Icon icon="carbon:windy" width="30" height="30" />
+            <div class="item-data">
+              <h4>Wind</h4>
+              <h4>5 m/s</h4>
+            </div>
+          </div>
+          <div class="grid-item">
+            <Icon icon="carbon:meter" />
+            <div class="item-data">
+              <h4>Pressure</h4>
+              <h4>534 hPa</h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -150,9 +172,18 @@
       width: 100% - 10%;
     }
     .grid-item {
+      display: flex;
+      align-items: center;
+      padding-left: 1rem;
       background-color: $dark-background-color;
-      text-align: center;
+      // text-align: center;
       border-radius: 6px;
+      .item-data{
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-left: 1rem;
+      }
     }
   }
 </style>
