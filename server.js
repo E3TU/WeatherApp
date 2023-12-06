@@ -1,32 +1,31 @@
-import fetch from "node-fetch";
-import * as cheerio from 'cheerio';
-
-const weatherUrl = "https://search.brave.com/search?q=weather+helsinki";
+import puppeteer from "puppeteer";
 
 async function getWeatherData() {
-  try {
-    const response = await fetch(weatherUrl);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.statusText}`);
+    const browser = await puppeteer.launch({ headless: 'new' });
+    const page = await browser.newPage();
+  
+    try {
+      // Navigate to the weather page
+      await page.goto('https://www.foreca.fi/Finland/Helsinki');
+  
+      // Extract the weather data from the page
+      const weatherData = await page.evaluate(() => {
+        // Customize this based on the actual structure of the website
+        const temperature = document.querySelector('.temp').innerText;
+  
+        return {
+          temperature
+        };
+      });
+  
+      console.log('Weather Data:', weatherData);
+    } catch (error) {
+      console.error('Error scraping data:', error.message);
+    } finally {
+      // Close the browser
+      await browser.close();
     }
-
-    const html = await response.text();
-    const $ = cheerio.load(html);
-
-    const currentTemp = $("#weather-temp").text().trim();
-    const maxTemp = $(".max").text().trim();
-    const minTemp = $(".min.svelte-13bx4fj").text().trim();
-
-
-    console.log("Current temperature: " + currentTemp);
-    console.log("Max temperature: " + maxTemp);
-    console.log("Min temperature: " + minTemp);
-
-
-  } catch (error) {
-    console.error('An error occurred:', error.message);
-  }
 }
-
+  
 getWeatherData();
