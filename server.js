@@ -12,6 +12,10 @@ async function getWeatherData() {
     const coldElement = await page.$('.t.cold');
     const warmElement = await page.$('.t.warm');
 
+    if (!coldElement && !warmElement) {
+      throw new Error('No results found.');
+    }
+
     const weatherData = {};
 
     if (coldElement) {
