@@ -5,25 +5,23 @@ async function getWeatherData() {
   const page = await browser.newPage();
 
   try {
-    // Navigate to the weather page
     await page.goto('https://www.foreca.fi/Finland/Helsinki');
 
-    // Extract the weather data from the page
-    const coldElement = await page.$('.t.cold');
-    const warmElement = await page.$('.t.warm');
+    const coldEl = await page.$('.t.cold');
+    const warmEl = await page.$('.t.warm');
 
-    if (!coldElement && !warmElement) {
+    if (!coldEl && !warmEl) {
       throw new Error('No results found.');
     }
 
     const weatherData = {};
 
-    if (coldElement) {
-      weatherData.cold = await page.evaluate(el => el.innerText, coldElement);
+    if (coldEl) {
+      weatherData.cold = await page.evaluate(el => el.innerText, coldEl);
     }
 
-    if (warmElement) {
-      weatherData.warm = await page.evaluate(el => el.innerText, warmElement);
+    if (warmEl) {
+      weatherData.warm = await page.evaluate(el => el.innerText, warmEl);
     }
 
     console.log('Weather Data:', weatherData);
