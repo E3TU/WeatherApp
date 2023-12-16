@@ -9,23 +9,50 @@ async function getWeatherData() {
 
     const coldTempEl = await page.$(".t.cold");
     const warmTempEl = await page.$(".t.warm");
+
     const weatherCondition = await page.$(".table .head");
 
-    if (!coldTempEl && !warmTempEl) {
-      throw new Error("No results found.");
-    }
+    const maxTempElWarm = await page.$(".tx.warm");
+    const maxTempElCold = await page.$(".tx.cold");
+    const minTempElWarm = await page.$(".tn.warm");
+    const minTempElCold = await page.$(".tn.cold");
 
     const weatherData = {};
 
     if (coldTempEl) {
       weatherData.temp = await page.evaluate((el) => el.innerText, coldTempEl);
-    }
-
-    if (warmTempEl) {
+    } else if (warmTempEl) {
       weatherData.temp = await page.evaluate((el) => el.innerText, warmTempEl);
     }
 
-    weatherData.Condition = await page.evaluate((el) => el.innerText, weatherCondition);
+    if (maxTempElWarm) {
+      weatherData.maxtemp = await page.evaluate(
+        (el) => el.innerText,
+        maxTempElWarm
+      );
+    } else if (maxTempElCold) {
+        weatherData.maxtemp = await page.evaluate(
+        (el) => el.innerText,
+        maxTempElCold
+      );
+    }
+      
+    if (minTempElWarm) {
+      weatherData.mintemp = await page.evaluate(
+        (el) => el.innerText,
+        minTempElWarm
+      );
+    } else if (minTempElCold) {
+        weatherData.mintemp = await page.evaluate(
+        (el) => el.innerText,
+        minTempElCold
+      );
+    }
+
+    weatherData.Condition = await page.evaluate(
+      (el) => el.innerText,
+      weatherCondition
+    );
 
     console.log("Weather Data:", weatherData);
   } catch (error) {
