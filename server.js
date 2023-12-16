@@ -17,6 +17,8 @@ async function getWeatherData() {
     const minTempElWarm = await page.$(".tn.warm");
     const minTempElCold = await page.$(".tn.cold");
 
+    const realFeelEl = await page.$('.temp p:not([class])');
+
     const weatherData = {};
 
     if (coldTempEl) {
@@ -49,10 +51,20 @@ async function getWeatherData() {
       );
     }
 
-    weatherData.Condition = await page.evaluate(
+    weatherData.condition = await page.evaluate(
       (el) => el.innerText,
       weatherCondition
     );
+
+    if (realFeelEl) {
+      const realFeelText = await page.evaluate((el) => el.innerText, realFeelEl);
+
+      const realFeelExtract = realFeelText.match(/(-?\d+\.?\d*)/);
+
+      if (realFeelExtract) {
+        weatherData.realfeel = realFeelExtract[0];
+      }
+    } 
 
     console.log("Weather Data:", weatherData);
   } catch (error) {
