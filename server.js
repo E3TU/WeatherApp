@@ -17,7 +17,13 @@ async function getWeatherData() {
     const minTempElWarm = await page.$(".tn.warm");
     const minTempElCold = await page.$(".tn.cold");
 
-    const realFeelEl = await page.$('.temp p:not([class])');
+    const realFeelEl = await page.$(".temp p:not([class])");
+
+    const values = await page.$$(".value");
+    const pressure = values[0];
+    const humidity = values[1];
+
+    const windspeed = await page.$(".ws");
 
     const weatherData = {};
 
@@ -64,7 +70,24 @@ async function getWeatherData() {
       if (realFeelExtract) {
         weatherData.realfeel = realFeelExtract[0];
       }
-    } 
+    }
+
+
+    weatherData.pressure = await page.evaluate(
+      (el) => el.innerText,
+      pressure
+    )
+
+    weatherData.humidity = await page.evaluate(
+      (el) => el.innerText,
+      humidity
+    )
+
+    weatherData.windspeed = await page.evaluate(
+      (el) => el.innerText,
+      windspeed
+    )
+
 
     console.log("Weather Data:", weatherData);
   } catch (error) {

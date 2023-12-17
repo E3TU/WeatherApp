@@ -14,7 +14,6 @@
       </div>
       <div class="mid-section">
         <h1 class="location">Finland, Helsinki</h1>
-        <h3 class="date">Monday, December 1, 2023 at 3:30 AM</h3>
         <h3 class="weather-forecast">Cloudy</h3>
         <!-- Icon -->
         <Icon icon="carbon:cloudy" width="100" height="100" />
