@@ -111,7 +111,8 @@ async function getWeatherData() {
       windspeed
     );
 
-    console.log("Weather Data:", weatherData);
+    // console.log("Weather Data:", weatherData);
+    return weatherData; // Return the weatherData object
   } catch (error) {
     console.error("Error scraping data:", error.message);
   } finally {
