@@ -3,7 +3,7 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
-  let data
+  let data;
 
   onMount(async() => {
     const res = await fetch("http://localhost:3001/weather");
