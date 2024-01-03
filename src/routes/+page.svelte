@@ -2,14 +2,23 @@
   import "@fontsource/ubuntu";
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
 
   let data;
 
-  onMount(async() => {
-    const res = await fetch("http://localhost:3001/weather");
-    data = await res.json();
-    console.log(data);
-  })
+  onMount(async () => {
+    await fetchData();
+  });
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/weather");
+      data = await res.json();
+      console.log(data.weatherData);
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
 </script>
 
 <body>
@@ -97,7 +106,12 @@
     height: 50rem;
     border-radius: 12px;
     background: #101010;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    box-shadow:
+      rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px,
+      rgba(0, 0, 0, 0.09) 0px -3px 5px;
   }
   .top-section {
     width: 100%;
