@@ -6,9 +6,7 @@
 
   let data;
 
-  onMount(async () => {
-    await fetchData();
-  });
+
 
   const fetchData = async () => {
     try {
@@ -19,6 +17,31 @@
       console.error("Error during fetch:", error);
     }
   };
+
+  async function updateUrl(newUrl) {
+  try {
+    const response = await fetch('http://localhost:3001/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ newUrl }),
+    });
+
+    const data = await response.json();
+    console.log(data.message); // Log the server response
+  } catch (error) {
+    console.error('Error updating URL:', error);
+  }
+}
+
+onMount(async () => {
+    await fetchData();
+    updateUrl(newUrl);
+  });
+
+// Example usage
+const newUrl = 'https://www.foreca.fi/Japan/Tokyo';
 </script>
 
 <body>
