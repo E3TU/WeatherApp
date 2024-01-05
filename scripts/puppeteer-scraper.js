@@ -2,7 +2,7 @@ import puppeteer from "puppeteer";
 
 let url = "https://www.foreca.fi/Finland/Helsinki";
 
-function updateUrl(newUrl) {
+async function updateUrl(newUrl) {
   url = newUrl;
 }
 
