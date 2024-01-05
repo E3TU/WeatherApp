@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import puppeteerScraper from "../scripts/puppeteer-scraper.js";
+import { updateUrl } from "../scripts/puppeteer-scraper.js";
 
 const app = express();
 // Define what port to use
@@ -19,6 +20,14 @@ app.get("/weather", async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error"});
     }
+});
+
+app.post("/update", (req, res) => {
+    const { newUrl } = req.body;
+
+    updateUrl(newUrl);
+
+    res.status(200).json({ message: "Url updated" });
 });
 
 app.listen(port, () => {
