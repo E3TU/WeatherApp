@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
-import puppeteerScraper from "../scripts/puppeteer-scraper.js";
-import { updateUrl } from "../scripts/puppeteer-scraper.js";
+import puppeteerScraper, { updateUrl } from "../scripts/puppeteer-scraper.js";
 
 const app = express();
 // Define what port to use
