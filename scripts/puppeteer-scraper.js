@@ -1,12 +1,18 @@
 import puppeteer from "puppeteer";
 
+let url = "https://www.foreca.fi/Finland/Helsinki";
+
+function updateUrl(newUrl) {
+  url = newUrl;
+}
+
 async function getWeatherData() {
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   try {
     // Go to page
-    await page.goto("https://www.foreca.fi/Finland/Helsinki");
+    await page.goto(url);
     // Temperature element classname changes based on the temperature so we need to have constants for both
     const coldTempEl = await page.$(".t.cold");
     const warmTempEl = await page.$(".t.warm");
@@ -125,3 +131,4 @@ async function getWeatherData() {
 getWeatherData();
 
 export default getWeatherData;
+export { updateUrl };
