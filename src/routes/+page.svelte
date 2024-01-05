@@ -2,16 +2,18 @@
   import "@fontsource/ubuntu";
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
-  import { writable } from "svelte/store";
 
-  let data;
+  const newUrl = 'https://www.foreca.fi/Japan/Tokyo';
 
-
+  onMount(async () => {
+    await fetchData();
+    await updateUrl(newUrl);
+  });
 
   const fetchData = async () => {
     try {
       const res = await fetch("http://localhost:3001/weather");
-      data = await res.json();
+      const data = await res.json();
       console.log(data.weatherData);
     } catch (error) {
       console.error("Error during fetch:", error);
@@ -34,14 +36,6 @@
     console.error('Error updating URL:', error);
   }
 }
-
-onMount(async () => {
-    await fetchData();
-    updateUrl(newUrl);
-  });
-
-// Example usage
-const newUrl = 'https://www.foreca.fi/Japan/Tokyo';
 </script>
 
 <body>
