@@ -3,7 +3,10 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
-  const newUrl = 'https://www.foreca.fi/Japan/Tokyo';
+
+  let country = "Japan";
+  let city = "Tokyo";
+  let newUrl = "https://www.foreca.fi/" + country + "/" + city;
 
   onMount(async () => {
     await fetchData();
