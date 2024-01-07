@@ -3,6 +3,8 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
+  //Components
+  import Form from "../components/Form.svelte";
 
   let country = "Japan";
   let city = "Tokyo";
@@ -45,10 +47,7 @@
   <div class="container">
     <div class="weather-card">
       <div class="top-section">
-        <form>
-          <input type="text" placeholder="Search for a city..." />
-          <button id="searchbtn"><Icon icon="carbon:search" /></button>
-        </form>
+        <Form />
       </div>
       <div class="mid-section">
         <h1 class="location">Finland, Helsinki</h1>
@@ -137,32 +136,6 @@
     width: 100%;
     height: auto;
     padding: 1rem;
-    input {
-      font-size: 1rem;
-      outline: none;
-      border: none;
-      padding: 0.75rem;
-      min-width: 14rem;
-      background-color: $dark-background-color;
-      color: $white !important;
-      margin-left: 1rem;
-      margin-top: 1rem;
-      border-radius: 6px;
-      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-    }
-    #searchbtn {
-      outline: none;
-      border: none;
-      color: #fff !important;
-      border-radius: 6px;
-      padding: 13px;
-      margin-left: 0.25rem;
-      background-color: $dark-background-color;
-      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-    }
-    ::placeholder {
-      color: $white;
-    }
   }
   .mid-section {
     display: flex;
