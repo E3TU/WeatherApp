@@ -2,14 +2,21 @@
   import Icon from "@iconify/svelte";
 
   let location = "";
+  let country = "";
+  let city = "";
 
   function form() {
-    console.log("Location:", location);
+    const locationArray = location.split(" ");
+
+    country = locationArray[0];
+    city = locationArray[1];
+
+    console.log("Location:", country + " " + city);
   }
 </script>
 
 <form>
-  <input bind:value={location} type="text" id="location" placeholder="Search for a city..." />
+  <input bind:value={location} type="text" id="location" name="location" placeholder="Search for a city..." />
   <button on:click={form} id="searchbtn"><Icon icon="carbon:search" /></button>
 </form>
 
