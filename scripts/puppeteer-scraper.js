@@ -7,7 +7,7 @@ async function updateUrl(newUrl) {
 }
 
 async function getWeatherData() {
-  const browser = await puppeteer.launch({ headless: "new", timeout: 0, });
+  const browser = await puppeteer.launch({ headless: "new", protocolTimeout: 0, });
   const page = await browser.newPage();
 
   try {
