@@ -8,18 +8,28 @@
   let city = "";
   let newUrl = "";
 
+  let temperature, maxtemperature, mintemperature, weatherCondition, realfeel, humidity, windspeed, airpressure = "";
+
   // Function to update the country and city names to the url
   function formInput(e) {
     e.preventDefault();
     // Split the country and city values and push them to array
-    const locationArray = location.split(" ");
-    country = locationArray[0];
-    city = locationArray[1];
+    const locationArray = location.split(/[ ,]+/);
+    country = capitalizeFirstLetter(locationArray[0]);
+    city = capitalizeFirstLetter(locationArray[1]);
 
-    // Update the url with new country and city names 
+    // Update the url with new country and city names
     newUrl = "https://www.foreca.fi/" + country + "/" + city;
     // Run the updateUrl function to send the country and city names to backend
+
+    //Clear the input after it has been submitted
+    location = "";
+
     updateUrl(newUrl);
+  }
+
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   onMount(async () => {
@@ -31,6 +41,14 @@
     try {
       const res = await fetch("http://localhost:3001/weather");
       const data = await res.json();
+      temperature = data.weatherData.temp;
+      maxtemperature = data.weatherData.maxtemp;
+      mintemperature = data.weatherData.mintemp;
+      weatherCondition = data.weatherData.condition;
+      realfeel = data.weatherData.realfeel;
+      humidity = data.weatherData.humidity;
+      windspeed = data.weatherData.windspeed;
+      airpressure = data.weatherData.pressure;
       console.log(data.weatherData);
     } catch (error) {
       console.error("Error during fetch:", error);
@@ -61,20 +79,29 @@
     <div class="weather-card">
       <div class="top-section">
         <form>
-          <input bind:value={location} type="text" id="location" name="location" placeholder="Search for a city..."/>
-          <button on:click={formInput} id="searchbtn"><Icon icon="carbon:search" /></button>
+          <input
+            bind:value={location}
+            type="text"
+            id="location"
+            name="location"
+            placeholder="Input Countryname Cityname..."
+            about
+          />
+          <button on:click={formInput} id="searchbtn"
+            ><Icon icon="carbon:search" /></button
+          >
         </form>
       </div>
       <div class="mid-section">
         <h1 class="location">{country} {city}</h1>
-        <h3 class="weather-forecast">Cloudy</h3>
+        <h3 class="weather-forecast">{weatherCondition}</h3>
         <!-- Icon -->
         <Icon icon="carbon:cloudy" width="100" height="100" />
 
-        <h2 class="tempnow">11°C</h2>
+        <h2 class="tempnow">{temperature}</h2>
         <div class="temps">
-          <h3 class="templow">Min -2°C</h3>
-          <h3 class="temphigh">Max 15°C</h3>
+          <h3 class="templow">Min {mintemperature}</h3>
+          <h3 class="temphigh">Max {maxtemperature}</h3>
         </div>
       </div>
       <div class="bottom-section">
@@ -83,28 +110,28 @@
             <Icon icon="carbon:temperature-celsius" width="30" height="30" />
             <div class="item-data">
               <h4>Real Feel</h4>
-              <h4>15°</h4>
+              <h4>{realfeel}</h4>
             </div>
           </div>
           <div class="grid-item">
             <Icon icon="carbon:humidity" width="30" height="30" />
             <div class="item-data">
               <h4>humidity</h4>
-              <h4>75%</h4>
+              <h4>{humidity}</h4>
             </div>
           </div>
           <div class="grid-item">
             <Icon icon="carbon:windy" width="30" height="30" />
             <div class="item-data">
               <h4>Wind</h4>
-              <h4>5 m/s</h4>
+              <h4>{windspeed}</h4>
             </div>
           </div>
           <div class="grid-item">
             <Icon icon="carbon:meter" />
             <div class="item-data">
               <h4>Pressure</h4>
-              <h4>534 hPa</h4>
+              <h4>{airpressure}</h4>
             </div>
           </div>
         </div>
