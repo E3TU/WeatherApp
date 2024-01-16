@@ -23,7 +23,7 @@ app.get("/weather", async (req, res) => {
 
 app.post("/update", (req, res) => {
     const { newUrl } = req.body;
-
+    // Send the newUrl to the puppeteer 
     updateUrl(newUrl);
 
     res.status(200).json({ message: "Url updated" });
