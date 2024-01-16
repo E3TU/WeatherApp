@@ -3,18 +3,30 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
-  //Components
-  import Form from "../components/Form.svelte";
+  let location = "";
+  let country = "";
+  let city = "";
+  let newUrl = "";
 
-  let country = "Japan";
-  let city = "Tokyo";
-  let newUrl = "https://www.foreca.fi/" + country + "/" + city;
+  // Function to update the country and city names to the url
+  function formInput(e) {
+    e.preventDefault();
+    // Split the country and city values and push them to array
+    const locationArray = location.split(" ");
+    country = locationArray[0];
+    city = locationArray[1];
+
+    // Update the url with new country and city names 
+    newUrl = "https://www.foreca.fi/" + country + "/" + city;
+    // Run the updateUrl function to send the country and city names to backend
+    updateUrl(newUrl);
+  }
 
   onMount(async () => {
     await fetchData();
-    await updateUrl(newUrl);
   });
 
+  // Fetch the weather data
   const fetchData = async () => {
     try {
       const res = await fetch("http://localhost:3001/weather");
@@ -25,32 +37,36 @@
     }
   };
 
+  // Update the URL and send the data to backend (this function is called when user inputs country and city name to the form)
   async function updateUrl(newUrl) {
-  try {
-    const response = await fetch('http://localhost:3001/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ newUrl }),
-    });
+    try {
+      const response = await fetch("http://localhost:3001/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newUrl }),
+      });
 
-    const data = await response.json();
-    console.log(data.message); // Log the server response
-  } catch (error) {
-    console.error('Error updating URL:', error);
+      const data = await response.json();
+      console.log(data.message); // Log the server response
+    } catch (error) {
+      console.error("Error updating URL:", error);
+    }
   }
-}
 </script>
 
 <body>
   <div class="container">
     <div class="weather-card">
       <div class="top-section">
-        <Form />
+        <form>
+          <input bind:value={location} type="text" id="location" name="location" placeholder="Search for a city..."/>
+          <button on:click={formInput} id="searchbtn"><Icon icon="carbon:search" /></button>
+        </form>
       </div>
       <div class="mid-section">
-        <h1 class="location">Finland, Helsinki</h1>
+        <h1 class="location">{country} {city}</h1>
         <h3 class="weather-forecast">Cloudy</h3>
         <!-- Icon -->
         <Icon icon="carbon:cloudy" width="100" height="100" />
@@ -136,7 +152,34 @@
     width: 100%;
     height: auto;
     padding: 1rem;
+    input {
+      font-size: 1rem;
+      outline: none;
+      border: none;
+      padding: 0.75rem;
+      min-width: 14rem;
+      background-color: $dark-background-color;
+      color: $white !important;
+      margin-left: 1rem;
+      margin-top: 1rem;
+      border-radius: 6px;
+      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    }
+    #searchbtn {
+      outline: none;
+      border: none;
+      color: #fff !important;
+      border-radius: 6px;
+      padding: 13px;
+      margin-left: 0.25rem;
+      background-color: $dark-background-color;
+      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    }
+    ::placeholder {
+      color: $white;
+    }
   }
+
   .mid-section {
     display: flex;
     justify-content: center;
