@@ -8,6 +8,7 @@
   let city = "";
   let newUrl = "";
 
+
   let temperature, maxtemperature, mintemperature, weatherCondition, realfeel, humidity, windspeed, airpressure = "";
 
   // Function to update the country and city names to the url
@@ -33,9 +34,7 @@
   }
 
   onMount(async () => {
-  if (newUrl !== "") {
     await fetchData();
-  }
 });
 
   // Fetch the weather data
