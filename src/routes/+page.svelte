@@ -33,8 +33,10 @@
   }
 
   onMount(async () => {
+  if (newUrl !== "") {
     await fetchData();
-  });
+  }
+});
 
   // Fetch the weather data
   const fetchData = async () => {
