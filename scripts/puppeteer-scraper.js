@@ -1,6 +1,19 @@
 import puppeteer from "puppeteer";
 
-let url = "https://www.foreca.fi/Finland/Helsinki";
+
+let defaultCountry = "Finland";
+let defaultCity = "Helsinki";
+let url = "https://www.foreca.fi/" + defaultCountry + "/" + defaultCity;
+
+let parseUrl = url.split("/");
+
+parseUrl = parseUrl.filter(function(part) {
+  return part.trim() !== "";
+});
+
+let country = parseUrl[2];
+let city = parseUrl[3];
+
 
 async function updateUrl(newUrl) {
   url = newUrl;
@@ -42,6 +55,9 @@ async function getWeatherData() {
 
     // Define weatherData object
     const weatherData = {};
+    
+    weatherData.country = country;
+    weatherData.city = city;
 
     // Checking which of these elements exists then pushing the data to the weatherData object
     if (coldTempEl) {
