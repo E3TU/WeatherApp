@@ -1,6 +1,10 @@
 import express from "express";
 import cors from "cors";
-import puppeteerScraper, { updateUrl } from "../scripts/puppeteer-scraper.js";
+import { fetchWeatherData } from "./weatherService.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 const app = express();
 // Define what port to use
@@ -12,21 +16,13 @@ app.use(express.json());
 app.get("/weather", async (req, res) => {
     try {
         // Call the getWeatherData function from puppeteer-scraper
-        const weatherData = await puppeteerScraper();
+        const weatherData = await fetchWeatherData();
         // Send the weatherData as response
         res.json({ weatherData });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error"});
     }
-});
-
-app.post("/update", (req, res) => {
-    const { newUrl } = req.body;
-    // Send the newUrl to the puppeteer 
-    updateUrl(newUrl);
-
-    res.status(200).json({ message: "Url updated" });
 });
 
 app.listen(port, () => {
