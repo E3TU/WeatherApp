@@ -28,15 +28,17 @@ const fetchWeatherData = async (req, res) => {
     // Access the weather data
     // console.log('Weather data:', data);
 
+    
     const weatherData = {
       location: data.name,
-      temp: data.main.temp,
-      realfeel: data.main.feels_like,
-      mintemp: data.main.temp_min,
-      maxtemp: data.main.temp_max,
+      temp: parseFloat(data.main.temp.toFixed(1)),
+      realfeel: parseFloat(data.main.feels_like.toFixed(1)),
+      mintemp: parseFloat(data.main.temp_min.toFixed(1)),
+      maxtemp: parseFloat(data.main.temp_max.toFixed(1)),
       pressure: data.main.pressure,
       humidity: data.main.humidity,
-      windspeed: data.wind.speed,
+      windspeed: parseFloat(data.wind.speed.toFixed(1)),
+      weathercondition: data.weather[0].main
     };
 
     return weatherData;
