@@ -4,49 +4,31 @@
   import { onMount } from "svelte";
 
   let location = "";
-  let country = "";
-  let city = "";
-  let newUrl = "";
 
-
-  let temperature, maxtemperature, mintemperature, weatherCondition, realfeel, humidity, windspeed, airpressure = "";
-
-  // Function to update the country and city names to the url
-  function formInput(e) {
-    e.preventDefault();
-    // Split the country and city values and push them to array
-    const locationArray = location.split(/[ ,]+/);
-    country = capitalizeFirstLetter(locationArray[0]);
-    city = capitalizeFirstLetter(locationArray[1]);
-
-    // Update the url with new country and city names
-    newUrl = "https://www.foreca.fi/" + country + "/" + city;
-    // Run the updateUrl function to send the country and city names to backend
-
-    //Clear the input after it has been submitted
-    location = "";
-
-    updateUrl(newUrl);
-  }
-
-  function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+  let temperature,
+    maxtemperature,
+    mintemperature,
+    weatherCondition,
+    realfeel,
+    humidity,
+    windspeed,
+    airpressure = "";
 
   onMount(async () => {
     await fetchData();
-});
+  });
 
   // Fetch the weather data
   const fetchData = async () => {
     try {
       const res = await fetch("http://localhost:3001/weather");
       const data = await res.json();
+      location = data.weatherData.location;
       temperature = data.weatherData.temp;
       maxtemperature = data.weatherData.maxtemp;
       mintemperature = data.weatherData.mintemp;
-      weatherCondition = data.weatherData.condition;
       realfeel = data.weatherData.realfeel;
+      weatherCondition = data.weatherData.weathercondition;
       humidity = data.weatherData.humidity;
       windspeed = data.weatherData.windspeed;
       airpressure = data.weatherData.pressure;
@@ -55,24 +37,6 @@
       console.error("Error during fetch:", error);
     }
   };
-
-  // Update the URL and send the data to backend (this function is called when user inputs country and city name to the form)
-  async function updateUrl(newUrl) {
-    try {
-      const response = await fetch("http://localhost:3001/update", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newUrl }),
-      });
-
-      const data = await response.json();
-      console.log(data.message); // Log the server response
-    } catch (error) {
-      console.error("Error updating URL:", error);
-    }
-  }
 </script>
 
 <body>
@@ -85,24 +49,21 @@
             type="text"
             id="location"
             name="location"
-            placeholder="Input Countryname Cityname..."
+            placeholder="Search for city..."
             about
           />
-          <button on:click={formInput} id="searchbtn"
-            ><Icon icon="carbon:search" /></button
-          >
         </form>
       </div>
       <div class="mid-section">
-        <h1 class="location">{country} {city}</h1>
+        <h1 class="location">{location}</h1>
         <h3 class="weather-forecast">{weatherCondition}</h3>
         <!-- Icon -->
         <Icon icon="carbon:cloudy" width="100" height="100" />
 
-        <h2 class="tempnow">{temperature}</h2>
+        <h2 class="tempnow">{temperature} °C</h2>
         <div class="temps">
-          <h3 class="templow">Min {mintemperature}</h3>
-          <h3 class="temphigh">Max {maxtemperature}</h3>
+          <h3 class="templow">Min {mintemperature} °C</h3>
+          <h3 class="temphigh">Max {maxtemperature} °C</h3>
         </div>
       </div>
       <div class="bottom-section">
@@ -111,28 +72,28 @@
             <Icon icon="carbon:temperature-celsius" width="30" height="30" />
             <div class="item-data">
               <h4>Real Feel</h4>
-              <h4>{realfeel}</h4>
+              <h4>{realfeel} °C</h4>
             </div>
           </div>
           <div class="grid-item">
             <Icon icon="carbon:humidity" width="30" height="30" />
             <div class="item-data">
               <h4>humidity</h4>
-              <h4>{humidity}</h4>
+              <h4>{humidity} %</h4>
             </div>
           </div>
           <div class="grid-item">
             <Icon icon="carbon:windy" width="30" height="30" />
             <div class="item-data">
               <h4>Wind</h4>
-              <h4>{windspeed}</h4>
+              <h4>{windspeed} m/s</h4>
             </div>
           </div>
           <div class="grid-item">
             <Icon icon="carbon:meter" />
             <div class="item-data">
               <h4>Pressure</h4>
-              <h4>{airpressure}</h4>
+              <h4>{airpressure} hPa</h4>
             </div>
           </div>
         </div>
@@ -150,7 +111,10 @@
     margin: 0;
     padding: 0;
     // background-color: $dark-background-color;
-    background: url("bg.svg");
+    background: url("bg.svg") no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     color: $dark-text-color;
     font-family: "Ubuntu", sans-serif;
   }
