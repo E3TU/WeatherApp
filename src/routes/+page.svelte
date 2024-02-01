@@ -3,7 +3,7 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
-  let location = "";
+  let newCity = "";
 
   let temperature,
     maxtemperature,
@@ -12,12 +12,19 @@
     realfeel,
     humidity,
     windspeed,
+    location,
     airpressure = "";
 
   onMount(async () => {
     await fetchData();
   });
 
+  function submitForm(e) {
+    e.preventDefault();
+    updateLocation(newCity);
+    newCity = "";
+
+}
   // Fetch the weather data
   const fetchData = async () => {
     try {
@@ -32,9 +39,26 @@
       humidity = data.weatherData.humidity;
       windspeed = data.weatherData.windspeed;
       airpressure = data.weatherData.pressure;
-      console.log(data.weatherData);
     } catch (error) {
       console.error("Error during fetch:", error);
+    }
+  };
+
+  const updateLocation = async (newCity) => {
+    try{
+      const response = await fetch("http://localhost:3001/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newCity })
+      });
+
+      const data = await response.json();
+      console.log(data.message); // Log the server response
+
+    } catch (error) {
+      console.log("Error updating", error);
     }
   };
 </script>
@@ -45,13 +69,16 @@
       <div class="top-section">
         <form>
           <input
-            bind:value={location}
+            bind:value={newCity}
             type="text"
             id="location"
             name="location"
             placeholder="Search for city..."
             about
           />
+          <button on:click={submitForm} id="searchbtn"
+            ><Icon icon="carbon:search" /></button
+          >
         </form>
       </div>
       <div class="mid-section">
