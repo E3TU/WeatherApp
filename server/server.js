@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { fetchWeatherData } from "./weatherService.js";
+import { fetchWeatherData, updateCity } from "./weatherService.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -23,6 +23,13 @@ app.get("/weather", async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error"});
     }
+});
+
+app.post("/update", (req, res) => {
+    const { newCity } = req.body;
+    updateCity(newCity);
+
+    res.status(200).json({ message: "location updated" });
 });
 
 app.listen(port, () => {
