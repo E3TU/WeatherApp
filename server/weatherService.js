@@ -2,15 +2,27 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+let city = "Helsinki";
+
+function updateCity(newCity) {
+  city = newCity;
+  console.log(city);
+  updateUrl(); // Call a function to update the URL
+}
+
 const apiKey = process.env.API_KEY;
-const city = "Helsinki";
 
 if (!apiKey) {
   console.error("Api key is missing add it to the .env file");
   process.exit(1);
 }
 
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+// Function to update the URL based on the current city
+function updateUrl() {
+  url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+}
 
 const fetchWeatherData = async (req, res) => {
   try {
@@ -50,4 +62,4 @@ const fetchWeatherData = async (req, res) => {
 
 fetchWeatherData();
 
-export { fetchWeatherData };
+export { fetchWeatherData, updateCity };
