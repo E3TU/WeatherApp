@@ -23,6 +23,7 @@
     e.preventDefault();
     updateLocation(newCity);
     newCity = "";
+    fetchData();
 
 }
   // Fetch the weather data
