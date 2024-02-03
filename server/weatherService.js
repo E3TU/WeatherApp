@@ -6,7 +6,6 @@ let city = "Helsinki";
 
 function updateCity(newCity) {
   city = newCity;
-  console.log(city);
   updateUrl(); // Call a function to update the URL
 }
 
