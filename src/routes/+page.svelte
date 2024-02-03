@@ -24,8 +24,7 @@
     updateLocation(newCity);
     newCity = "";
     fetchData();
-
-}
+  }
   // Fetch the weather data
   const fetchData = async () => {
     try {
@@ -46,18 +45,17 @@
   };
 
   const updateLocation = async (newCity) => {
-    try{
+    try {
       const response = await fetch("http://localhost:3001/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ newCity })
+        body: JSON.stringify({ newCity }),
       });
 
       const data = await response.json();
       console.log(data.message); // Log the server response
-
     } catch (error) {
       console.log("Error updating", error);
     }
@@ -145,6 +143,7 @@
     background-position: center center;
     color: $dark-text-color;
     font-family: "Ubuntu", sans-serif;
+    height: 100vh;
   }
 
   .container {
