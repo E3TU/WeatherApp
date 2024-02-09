@@ -39,7 +39,6 @@ const fetchWeatherData = async (req, res) => {
     // Access the weather data
     // console.log('Weather data:', data);
 
-    
     const weatherData = {
       location: data.name,
       temp: parseFloat(data.main.temp.toFixed(1)),
@@ -49,7 +48,8 @@ const fetchWeatherData = async (req, res) => {
       pressure: data.main.pressure,
       humidity: data.main.humidity,
       windspeed: parseFloat(data.wind.speed.toFixed(1)),
-      weathercondition: data.weather[0].main
+      weathercondition: data.weather[0].main,
+      icon: data.weather[0].icon
     };
 
     return weatherData;
@@ -61,4 +61,4 @@ const fetchWeatherData = async (req, res) => {
 
 fetchWeatherData();
 
-export { fetchWeatherData, updateCity };
+export { fetchWeatherData, updateCity};
