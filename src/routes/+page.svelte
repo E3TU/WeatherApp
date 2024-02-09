@@ -13,7 +13,8 @@
     humidity,
     windspeed,
     location,
-    airpressure = "";
+    airpressure,
+    icon = "";
 
   onMount(async () => {
     await fetchData();
@@ -39,6 +40,7 @@
       humidity = data.weatherData.humidity;
       windspeed = data.weatherData.windspeed;
       airpressure = data.weatherData.pressure;
+      icon = data.weatherData.icon;
     } catch (error) {
       console.error("Error during fetch:", error);
     }
@@ -60,6 +62,7 @@
       console.log("Error updating", error);
     }
   };
+
 </script>
 
 <body>
@@ -84,8 +87,8 @@
         <h1 class="location">{location}</h1>
         <h3 class="weather-forecast">{weatherCondition}</h3>
         <!-- Icon -->
-        <Icon icon="carbon:cloudy" width="100" height="100" />
-
+        <!-- <Icon icon="carbon:sun" width="100" height="100" /> -->
+        <img alt="weathericon" src="https://openweathermap.org/img/wn/{icon}.png">
         <h2 class="tempnow">{temperature} °C</h2>
         <div class="temps">
           <h3 class="templow">Min {mintemperature} °C</h3>
