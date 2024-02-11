@@ -62,7 +62,6 @@
       console.log("Error updating", error);
     }
   };
-
 </script>
 
 <body>
@@ -88,7 +87,14 @@
         <h3 class="weather-forecast">{weatherCondition}</h3>
         <!-- Icon -->
         <!-- <Icon icon="carbon:sun" width="100" height="100" /> -->
-        <img alt="weathericon" src="https://openweathermap.org/img/wn/{icon}.png">
+        {#if icon}
+          <img
+            alt="weathericon"
+            src={`https://openweathermap.org/img/wn/${icon}.png`}
+          />
+        {:else}
+          <p>No weather icon available</p>
+        {/if}
         <h2 class="tempnow">{temperature} °C</h2>
         <div class="temps">
           <h3 class="templow">Min {mintemperature} °C</h3>
