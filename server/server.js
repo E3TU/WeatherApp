@@ -29,7 +29,7 @@ app.post("/update", (req, res) => {
     const { newCity } = req.body;
     updateCity(newCity);
 
-    res.status(200).json({ message: "location updated" });
+    // res.status(200).json({ message: "location updated" });
 });
 
 app.listen(port, () => {
