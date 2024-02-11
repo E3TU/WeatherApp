@@ -174,7 +174,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    animation: fadeInAnimation ease 3s;
+    animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
