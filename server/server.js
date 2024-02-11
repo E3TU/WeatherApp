@@ -13,7 +13,7 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-app.get("/weather", async (res) => {
+app.get("/weather", async (req, res) => {
     try {
         // Call the getWeatherData function from puppeteer-scraper
         const weatherData = await fetchWeatherData();
