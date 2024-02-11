@@ -23,7 +23,7 @@ function updateUrl() {
   url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 }
 
-const fetchWeatherData = async (req, res) => {
+const fetchWeatherData = async () => {
   try {
     // Make a GET request using fetch
     const response = await fetch(url);
