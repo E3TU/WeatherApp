@@ -3,6 +3,8 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
+  let isLoaded = false;
+
   let newCity = "";
 
   let temperature,
@@ -18,6 +20,7 @@
 
   onMount(async () => {
     await fetchData();
+    isLoaded = true;
   });
 
   function submitForm(e) {
@@ -65,79 +68,90 @@
 </script>
 
 <body>
-  <div class="container">
-    <div class="weather-card">
-      <div class="top-section">
-        <form>
-          <input
-            bind:value={newCity}
-            type="text"
-            id="location"
-            name="location"
-            placeholder="Search for city..."
-            about
-          />
-          <button on:click={submitForm} id="searchbtn"
-            ><Icon icon="carbon:search" /></button
-          >
-        </form>
-      </div>
-      <div class="mid-section">
-        <h1 class="location">{location}</h1>
-        <h3 class="weather-forecast">{weatherCondition}</h3>
-        <!-- Icon -->
-        <!-- <Icon icon="carbon:sun" width="100" height="100" /> -->
-        {#if icon}
-          <img
-            alt="weathericon"
-            src={`https://openweathermap.org/img/wn/${icon}.png`}
-          />
-        {:else}
-          <p>No weather icon available</p>
-        {/if}
-        <h2 class="tempnow">{temperature} °C</h2>
-        <div class="temps">
-          <h3 class="templow">Min {mintemperature} °C</h3>
-          <h3 class="temphigh">Max {maxtemperature} °C</h3>
+  {#if isLoaded}
+    <div class="container">
+      <div class="weather-card">
+        <div class="top-section">
+          <form>
+            <input
+              bind:value={newCity}
+              type="text"
+              id="location"
+              name="location"
+              placeholder="Search for city..."
+              about
+            />
+            <button on:click={submitForm} id="searchbtn"
+              ><Icon icon="carbon:search" /></button
+            >
+          </form>
         </div>
-      </div>
-      <div class="bottom-section">
-        <div class="grid-container">
-          <div class="grid-item">
-            <Icon icon="carbon:temperature-celsius" width="30" height="30" />
-            <div class="item-data">
-              <h4>Real Feel</h4>
-              <h4>{realfeel} °C</h4>
-            </div>
+        <div class="mid-section">
+          <h1 class="location">{location}</h1>
+          <h3 class="weather-forecast">{weatherCondition}</h3>
+          <!-- Icon -->
+          <!-- <Icon icon="carbon:sun" width="100" height="100" /> -->
+          {#if icon}
+            <img
+              alt="weathericon"
+              src={`https://openweathermap.org/img/wn/${icon}.png`}
+            />
+          {:else}
+            <p>No weather icon available</p>
+          {/if}
+          <h2 class="tempnow">{temperature} °C</h2>
+          <div class="temps">
+            <h3 class="templow">Min {mintemperature} °C</h3>
+            <h3 class="temphigh">Max {maxtemperature} °C</h3>
           </div>
-          <div class="grid-item">
-            <Icon icon="carbon:humidity" width="30" height="30" />
-            <div class="item-data">
-              <h4>humidity</h4>
-              <h4>{humidity} %</h4>
+        </div>
+        <div class="bottom-section">
+          <div class="grid-container">
+            <div class="grid-item">
+              <Icon icon="carbon:temperature-celsius" width="30" height="30" />
+              <div class="item-data">
+                <h4>Real Feel</h4>
+                <h4>{realfeel} °C</h4>
+              </div>
             </div>
-          </div>
-          <div class="grid-item">
-            <Icon icon="carbon:windy" width="30" height="30" />
-            <div class="item-data">
-              <h4>Wind</h4>
-              <h4>{windspeed} m/s</h4>
+            <div class="grid-item">
+              <Icon icon="carbon:humidity" width="30" height="30" />
+              <div class="item-data">
+                <h4>humidity</h4>
+                <h4>{humidity} %</h4>
+              </div>
             </div>
-          </div>
-          <div class="grid-item">
-            <Icon icon="carbon:meter" />
-            <div class="item-data">
-              <h4>Pressure</h4>
-              <h4>{airpressure} hPa</h4>
+            <div class="grid-item">
+              <Icon icon="carbon:windy" width="30" height="30" />
+              <div class="item-data">
+                <h4>Wind</h4>
+                <h4>{windspeed} m/s</h4>
+              </div>
+            </div>
+            <div class="grid-item">
+              <Icon icon="carbon:meter" />
+              <div class="item-data">
+                <h4>Pressure</h4>
+                <h4>{airpressure} hPa</h4>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  {/if}
 </body>
 
 <style lang="scss">
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
   * {
     margin: 0;
     padding: 0;
@@ -160,6 +174,9 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
   }
   .weather-card {
     display: flex;
