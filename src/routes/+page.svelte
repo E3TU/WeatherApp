@@ -3,8 +3,10 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
-  let isLoaded = false;
+  import { fade } from 'svelte/transition';
 
+  let isLoaded = false;
+  let showWeatherContainer = false;
   let newCity = "";
 
   let temperature,
@@ -28,6 +30,7 @@
     updateLocation(newCity);
     newCity = "";
     fetchData();
+    showWeatherContainer = true;
   }
   // Fetch the weather data
   const fetchData = async () => {
@@ -70,22 +73,24 @@
 <body>
   {#if isLoaded}
     <div class="container">
-      <div class="weather-card">
-        <div class="top-section">
-          <form>
-            <input
-              bind:value={newCity}
-              type="text"
-              id="location"
-              name="location"
-              placeholder="Search for city..."
-              about
-            />
-            <button on:click={submitForm} id="searchbtn"
-              ><Icon icon="carbon:search" /></button
-            >
-          </form>
-        </div>
+      <h1 class="app-name-heading">Weather App</h1>
+      <div class="top-section">
+        <form>
+          <input
+            bind:value={newCity}
+            type="text"
+            id="location"
+            name="location"
+            placeholder="Search for city..."
+            about
+          />
+          <button on:click={submitForm} id="searchbtn"
+            ><Icon icon="carbon:search" /></button
+          >
+        </form>
+      </div>
+      {#if showWeatherContainer}
+      <div transition:fade={{ delay: 300, duration: 300}} class="weather-card">
         <div class="mid-section">
           <h1 class="location">{location}</h1>
           <h3 class="weather-forecast">{weatherCondition}</h3>
@@ -138,6 +143,7 @@
           </div>
         </div>
       </div>
+      {/if}
     </div>
   {/if}
 </body>
@@ -171,51 +177,56 @@
 
   .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: 100%;
     animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
+  .app-name-heading{
+    margin-top: 2rem;
+  }
   .weather-card {
     display: flex;
     flex-direction: column;
-    margin-top: 5rem;
-    width: 45rem;
-    height: 50rem;
+    margin-top: 2rem;
+    width: 40rem;
+    height: 45rem;
     border-radius: 12px;
-    background: #101010;
+    background: $weathercard-background-color;
     box-shadow:
       rgba(0, 0, 0, 0.25) 0px 54px 55px,
       rgba(0, 0, 0, 0.12) 0px -12px 30px,
       rgba(0, 0, 0, 0.12) 0px 4px 6px,
       rgba(0, 0, 0, 0.17) 0px 12px 13px,
       rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transition: 5s;
   }
   .top-section {
-    width: 100%;
     height: auto;
-    padding: 1rem;
+    margin-top: 2rem;
     input {
       font-size: 1rem;
       outline: none;
       border: none;
-      padding: 0.75rem;
-      min-width: 14rem;
+      padding: 1rem 1rem;
+      min-width: 20rem;
       background-color: $dark-background-color;
       color: $white !important;
-      margin-left: 1rem;
       margin-top: 1rem;
       border-radius: 6px;
       box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+
     }
     #searchbtn {
+      font-size: 1rem;
       outline: none;
       border: none;
       color: #fff !important;
       border-radius: 6px;
-      padding: 13px;
+      padding: 1rem 1rem;
       margin-left: 0.25rem;
       background-color: $dark-background-color;
       box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
@@ -254,6 +265,7 @@
   .bottom-section {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     .grid-container {
@@ -263,7 +275,7 @@
       grid-template-rows: repeat(2, 1fr);
       justify-content: center;
       gap: 20px;
-      height: 100% - 20%;
+      height: 100% - 30%;
       width: 100% - 10%;
     }
     .grid-item {
