@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-let city = "Helsinki";
+let city = "";
 
 function updateCity(newCity) {
   city = newCity;
