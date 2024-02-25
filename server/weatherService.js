@@ -25,6 +25,12 @@ function updateUrl() {
 
 const fetchWeatherData = async () => {
   try {
+    // Check if the city variable is empty
+    if (!city) {
+      console.warn("City is not set");
+      return null; // or some default data or handle accordingly
+    }
+
     // Make a GET request using fetch
     const response = await fetch(url);
 
@@ -49,15 +55,17 @@ const fetchWeatherData = async () => {
       humidity: data.main.humidity,
       windspeed: parseFloat(data.wind.speed.toFixed(1)),
       weathercondition: data.weather[0].main,
-      icon: data.weather[0].icon
+      icon: data.weather[0].icon,
     };
 
     return weatherData;
-    
   } catch (error) {
     console.error("Error fetching data:", error);
+    throw error; // Re-throw the error to propagate it to the caller
   }
 };
+
+
 
 fetchWeatherData();
 
