@@ -3,7 +3,7 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
-  import { fade } from 'svelte/transition';
+  import { fade } from "svelte/transition";
 
   let isLoaded = false;
   let showWeatherContainer = false;
@@ -29,8 +29,10 @@
     e.preventDefault();
     updateLocation(newCity);
     newCity = "";
-    fetchData();
-    showWeatherContainer = true;
+    fetchData().then(() => {
+      // Show the weather container after fetching new data
+      showWeatherContainer = true;
+    });
   }
   // Fetch the weather data
   const fetchData = async () => {
@@ -90,59 +92,66 @@
         </form>
       </div>
       {#if showWeatherContainer}
-      <div transition:fade={{ delay: 300, duration: 300}} class="weather-card">
-        <div class="mid-section">
-          <h1 class="location">{location}</h1>
-          <h3 class="weather-forecast">{weatherCondition}</h3>
-          <!-- Icon -->
-          <!-- <Icon icon="carbon:sun" width="100" height="100" /> -->
-          {#if icon}
-            <img
-              alt="weathericon"
-              src={`https://openweathermap.org/img/wn/${icon}.png`}
-            />
-          {:else}
-            <p>No weather icon available</p>
-          {/if}
-          <h2 class="tempnow">{temperature} °C</h2>
-          <div class="temps">
-            <h3 class="templow">Min {mintemperature} °C</h3>
-            <h3 class="temphigh">Max {maxtemperature} °C</h3>
-          </div>
-        </div>
-        <div class="bottom-section">
-          <div class="grid-container">
-            <div class="grid-item">
-              <Icon icon="carbon:temperature-celsius" width="30" height="30" />
-              <div class="item-data">
-                <h4>Real Feel</h4>
-                <h4>{realfeel} °C</h4>
-              </div>
-            </div>
-            <div class="grid-item">
-              <Icon icon="carbon:humidity" width="30" height="30" />
-              <div class="item-data">
-                <h4>humidity</h4>
-                <h4>{humidity} %</h4>
-              </div>
-            </div>
-            <div class="grid-item">
-              <Icon icon="carbon:windy" width="30" height="30" />
-              <div class="item-data">
-                <h4>Wind</h4>
-                <h4>{windspeed} m/s</h4>
-              </div>
-            </div>
-            <div class="grid-item">
-              <Icon icon="carbon:meter" />
-              <div class="item-data">
-                <h4>Pressure</h4>
-                <h4>{airpressure} hPa</h4>
-              </div>
+        <div
+          transition:fade={{ delay: 300, duration: 300 }}
+          class="weather-card"
+        >
+          <div class="mid-section">
+            <h1 class="location">{location}</h1>
+            <h3 class="weather-forecast">{weatherCondition}</h3>
+            <!-- Icon -->
+            <!-- <Icon icon="carbon:sun" width="100" height="100" /> -->
+            {#if icon}
+              <img
+                alt="weathericon"
+                src={`https://openweathermap.org/img/wn/${icon}.png`}
+              />
+            {:else}
+              <p>No weather icon available</p>
+            {/if}
+            <h2 class="tempnow">{temperature} °C</h2>
+            <div class="temps">
+              <h3 class="templow">Min {mintemperature} °C</h3>
+              <h3 class="temphigh">Max {maxtemperature} °C</h3>
             </div>
           </div>
+          <div class="bottom-section">
+            <div class="grid-container">
+              <div class="grid-item">
+                <Icon
+                  icon="carbon:temperature-celsius"
+                  width="30"
+                  height="30"
+                />
+                <div class="item-data">
+                  <h4>Real Feel</h4>
+                  <h4>{realfeel} °C</h4>
+                </div>
+              </div>
+              <div class="grid-item">
+                <Icon icon="carbon:humidity" width="30" height="30" />
+                <div class="item-data">
+                  <h4>humidity</h4>
+                  <h4>{humidity} %</h4>
+                </div>
+              </div>
+              <div class="grid-item">
+                <Icon icon="carbon:windy" width="30" height="30" />
+                <div class="item-data">
+                  <h4>Wind</h4>
+                  <h4>{windspeed} m/s</h4>
+                </div>
+              </div>
+              <div class="grid-item">
+                <Icon icon="carbon:meter" />
+                <div class="item-data">
+                  <h4>Pressure</h4>
+                  <h4>{airpressure} hPa</h4>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
       {/if}
     </div>
   {/if}
@@ -185,7 +194,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
-  .app-name-heading{
+  .app-name-heading {
     margin-top: 2rem;
   }
   .weather-card {
@@ -218,7 +227,6 @@
       margin-top: 1rem;
       border-radius: 6px;
       box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-
     }
     #searchbtn {
       font-size: 1rem;
