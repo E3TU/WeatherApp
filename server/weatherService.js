@@ -27,7 +27,7 @@ const fetchWeatherData = async () => {
   try {
     // Check if the city variable is empty
     if (!city) {
-      console.warn("City is not set");
+      console.warn("City is not set(this warning can be ignored)");
       return null; // or some default data or handle accordingly
     }
 
