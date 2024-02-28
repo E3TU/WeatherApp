@@ -21,7 +21,6 @@
     icon = "";
 
   onMount(async () => {
-    await fetchData();
     isLoaded = true;
   });
 
