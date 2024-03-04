@@ -1,1 +1,16 @@
-/* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
+* {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    // background-color: $dark-background-color;
+    background: url("bg.svg") no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: $dark-text-color;
+    font-family: "Ubuntu", sans-serif;
+    height: 100vh;
+  }
