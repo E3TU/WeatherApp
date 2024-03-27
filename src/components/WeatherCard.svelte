@@ -15,7 +15,7 @@
     airpressure;
 </script>
 
-<div transition:fade={{ delay: 500, duration: 500 }} class="weather-card">
+<div transition:fade={{ delay: 300, duration: 300 }} class="weather-card">
   <div class="mid-section">
     <h1 class="location">{location}</h1>
     <h3 class="weather-forecast">{weatherCondition}</h3>
@@ -142,6 +142,12 @@
         gap: 0.25rem;
         margin-left: 1rem;
       }
+    }
+  }
+  @media only screen and (max-width: 800px) {
+    .weather-card{
+      width: 35rem;
+      height: 40rem;
     }
   }
 </style>
