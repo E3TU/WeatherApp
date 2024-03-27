@@ -141,9 +141,10 @@
       margin-top: 1rem;
       border-radius: 6px;
       box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+      box-sizing: border-box;
     }
     #searchbtn {
-      font-size: 1rem;
+      font-size: 0.96rem;
       outline: none;
       border: none;
       color: #fff !important;
@@ -152,9 +153,11 @@
       margin-left: 0.25rem;
       background-color: $dark-background-color;
       box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+      box-sizing: border-box;
     }
     ::placeholder {
       color: $white;
+      opacity: 0.6;
     }
   }
 
