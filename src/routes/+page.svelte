@@ -98,7 +98,18 @@
         </form>
       </div>
       {#if showWeatherContainer}
-        <WeatherCard {location} {weatherCondition} {icon} {temperature} {mintemperature} {maxtemperature} {realfeel} {humidity} {windspeed} {airpressure}/>
+        <WeatherCard
+          {location}
+          {weatherCondition}
+          {icon}
+          {temperature}
+          {mintemperature}
+          {maxtemperature}
+          {realfeel}
+          {humidity}
+          {windspeed}
+          {airpressure}
+        />
       {/if}
     </div>
   {/if}
@@ -130,35 +141,59 @@
   .top-section {
     height: auto;
     margin-top: 2rem;
-    input {
-      font-size: 1rem;
-      outline: none;
-      border: none;
-      padding: 1rem 1rem;
-      min-width: 20rem;
-      background-color: $dark-background-color;
-      color: $white !important;
-      margin-top: 1rem;
-      border-radius: 6px;
-      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-      box-sizing: border-box;
-    }
-    #searchbtn {
-      font-size: 0.96rem;
-      outline: none;
-      border: none;
-      color: #fff !important;
-      border-radius: 6px;
-      padding: 1rem 1rem;
-      margin-left: 0.25rem;
-      background-color: $dark-background-color;
-      box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-      box-sizing: border-box;
-    }
-    ::placeholder {
-      color: $white;
-      opacity: 0.6;
-    }
   }
 
+  input {
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    padding: 1rem 1rem;
+    // min-width: 20rem;
+    width: 20rem;
+    background-color: $dark-background-color;
+    color: $white !important;
+    margin-top: 1rem;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    box-sizing: border-box;
+  }
+  #searchbtn {
+    font-size: 0.96rem;
+    outline: none;
+    border: none;
+    color: #fff !important;
+    border-radius: 6px;
+    padding: 1rem 1rem;
+    margin-left: 0.25rem;
+    background-color: $dark-background-color;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    box-sizing: border-box;
+  }
+  ::placeholder {
+    color: $white;
+    opacity: 0.6;
+  }
+
+  @media only screen and (max-width: 495px) {
+    input {
+      width: 18rem;
+    }
+  }
+  @media only screen and (max-width: 415px) {
+    .app-name-heading {
+      font-size: 1.75rem;
+    }
+    input {
+      width: 15rem;
+    }
+  }
+  @media only screen and (max-width: 370px) {
+    input {
+      width: 13rem;
+      padding: 0.75rem 0.75rem;
+    }
+    #searchbtn{
+      padding: 0.75rem 0.75rem;
+    }
+  }
 </style>
