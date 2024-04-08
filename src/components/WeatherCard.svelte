@@ -2,7 +2,6 @@
   import Icon from "@iconify/svelte";
   import { fade } from "svelte/transition";
 
-
   export let location,
     weatherCondition,
     icon,
@@ -16,7 +15,7 @@
 </script>
 
 <div transition:fade={{ delay: 300, duration: 300 }} class="weather-card">
-  <div class="mid-section">
+  <div class="weather-card-top">
     <h1 class="location">{location}</h1>
     <h3 class="weather-forecast">{weatherCondition}</h3>
     <!-- Icon -->
@@ -35,7 +34,7 @@
       <h3 class="temphigh">Max {maxtemperature} °C</h3>
     </div>
   </div>
-  <div class="bottom-section">
+  <div class="weather-card-bottom">
     <div class="grid-container">
       <div class="grid-item">
         <Icon icon="carbon:temperature-celsius" width="30" height="30" />
@@ -85,9 +84,19 @@
       rgba(0, 0, 0, 0.17) 0px 12px 13px,
       rgba(0, 0, 0, 0.09) 0px -3px 5px;
     transition: 5s;
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    h3 {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
   }
 
-  .mid-section {
+  .weather-card-top {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,25 +104,22 @@
     width: 100%;
     height: auto;
     padding-top: 4rem;
-    h3 {
-      margin-top: 1rem;
-    }
-    .weather-forecast {
-      margin-top: 2rem !important;
-      background-color: $dark-background-color;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 2rem;
-    }
-    .tempnow {
-      margin-top: 2rem;
-    }
-    .temps {
-      display: flex;
-      gap: 1rem;
-    }
   }
-  .bottom-section {
+  .weather-forecast {
+    margin-top: 2rem;
+    background-color: $dark-background-color;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+  .tempnow {
+    margin-top: 2rem;
+  }
+  .temps {
+    display: flex;
+    gap: 1rem;
+  }
+  .weather-card-bottom {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,10 +150,75 @@
       }
     }
   }
+
+  // Media queries(width)
   @media only screen and (max-width: 800px) {
-    .weather-card{
+    .weather-card {
       width: 35rem;
       height: 40rem;
+    }
+  }
+  @media only screen and (max-width: 580px) {
+    .weather-card {
+      width: 30rem;
+      height: 35rem;
+      h3 {
+        font-size: 1rem;
+        margin-top: 1rem;
+      }
+      h4 {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  @media only screen and (max-width: 495px) {
+    .weather-card {
+      width: 25rem;
+      height: 35rem;
+    }
+  }
+  @media only screen and (max-width: 415px) {
+    .weather-card {
+      width: 22rem;
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+    .weather-card-top {
+      padding-top: 3rem;
+    }
+    .weather-forecast {
+      margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
+    }
+    .tempnow {
+      margin-top: 1rem;
+    }
+  }
+  @media only screen and (max-width: 370px) {
+    .weather-card{
+      width: 20rem;
+      height: 30rem;
+      h1{
+        font-size: 1.5rem;
+      }
+      h2{
+        font-size: 1.25rem;
+      }
+      h3{
+        font-size: 1rem;
+      }
+    }
+    @media only screen and (max-width: 330px) {
+      .weather-card{
+        width: 18rem;
+      }
+    }
+  }
+  // Media queries(height)
+  @media only screen and (max-height: 670px) {
+    .weather-card {
+      margin-bottom: 2rem;
     }
   }
 </style>
