@@ -18,7 +18,7 @@ Run the app:
 ```bash
 npm run dev
 ```
-## Run the server
+### Run the server
 Navigate to the server folder:
 ```bash
 cd WeatherApp/server
